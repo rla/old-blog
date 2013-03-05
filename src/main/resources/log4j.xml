@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+    Copyright (C) 2009 Raivo Laanemets <rl@starline.ee>
+
+    This file is part of rl-blog.
+
+    Foobar is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Foobar is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with rl-blog.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%5p %d{ISO8601} [%t] %c{2} - %m%n" />
+		</layout>
+	</appender>
+
+	<!--
+	<appender name="FileAppender" class="org.apache.log4j.rolling.RollingFileAppender">
+		<param name="file" value="logs/bcup.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		
+		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+			<param name="FileNamePattern" value="logs/bcup.%d.log.gz" />
+		</rollingPolicy>
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%5p %d{ISO8601} [%t] %c{2} - %m%n" />
+		</layout>
+	</appender>
+	-->
+
+	<category name="ee.pri.rl.blog" additivity="false">
+		<priority value="info" />
+		<appender-ref ref="ConsoleAppender" />
+	</category>
+
+	<root>
+		<priority value="info" />
+		<appender-ref ref="ConsoleAppender" />
+	</root>
+
+</log4j:configuration>

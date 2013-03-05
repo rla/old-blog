@@ -1,0 +1,108 @@
+/**
+ * Copyright (C) 2009 Raivo Laanemets <rl@starline.ee>
+ *
+ * This file is part of rl-blog.
+ *
+ * Foobar is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Foobar is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with rl-blog.  If not, see <http://www.gnu.org/licenses/>.
+ */
+body {
+	margin-left: 100px;
+	margin-top: 100px;
+	width: 700px;
+}
+
+h1, h2, h3, h4, h5 {
+	color: #006666;
+	font-weight: normal;
+}
+
+body, h1, h2, h3, h5, h5, a, p, span, li, div, td, th {
+	font-family: Verdana, sans-serif;
+}
+
+p {
+	text-align: justify;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+td, th {
+	border: 1px solid #666666;
+	padding: 4px;
+}
+
+form td, form th {
+	border: none;
+}
+
+div.pageFeedback {
+	padding: 5px;
+	border: 1px dotted #666666;
+}
+
+.feedbackPanelINFO {
+	color: green;
+}
+
+.feedbackPanelERROR {
+	color: red;
+}
+
+.date {
+	color: #666600;
+}
+
+div.comment {
+	border: 1px dotted #666666;
+	padding-left: 20px;
+	margin-bottom: 10px;
+}
+
+div.commentInfo {
+	font-style: italic;
+}
+
+div.commentContents {
+	font-size: smaller;
+}
+
+pre {
+	font-family: monospace;
+	padding: 10px;
+	padding-left: 20px;
+	background-color: #ffffff;
+	font-size: 9pt;
+	border: 1px dotted #666666;
+}
+
+a {
+	color: #006600;
+	text-decoration: underline;
+}
+
+div.actions a {
+	font-weight: bold;
+	text-decoration: none;
+	color: #006666;
+}
+
+a.entry_category {
+	font-size: 10pt;
+}
+
+span.entry_cats_label, span.entry_cat_sep {
+	font-size: 10pt;
+}

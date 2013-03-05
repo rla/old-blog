@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2009 Raivo Laanemets <rl@starline.ee>
+
+    This file is part of rl-blog.
+
+    Foobar is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Foobar is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with rl-blog.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+	<display-name>Blog</display-name>
+
+	<context-param>
+		<param-name>configuration</param-name>
+		<param-value>deployment</param-value>
+	</context-param>
+
+	<session-config>
+		<session-timeout>25</session-timeout>
+	</session-config>
+
+	<filter>
+		<filter-name>ResponseTimeFilter</filter-name>
+		<filter-class>ee.pri.rl.blog.web.filter.BlogResponseTimeFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>ResponseTimeFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>JSessionIdRemoverFilter</filter-name>
+		<filter-class>ee.pri.rl.blog.web.filter.JSessionIdRemoverFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>JSessionIdRemoverFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>WicketSessionFilter</filter-name>
+		<filter-class>
+			org.apache.wicket.protocol.http.servlet.WicketSessionFilter</filter-class>
+		<init-param>
+			<param-name>filterName</param-name>
+			<param-value>Blog</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>WicketSessionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>PageCachingFilter</filter-name>
+		<filter-class>ee.pri.rl.blog.web.filter.BlogPageCachingFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>PageCachingFilter</filter-name>
+		<url-pattern>/app/index</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>PageCachingFilter</filter-name>
+		<url-pattern>/app/entries</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>PageCachingFilter</filter-name>
+		<url-pattern>/app/entry/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>PageCachingFilter</filter-name>
+		<url-pattern>/app/category/*</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>DownloadServlet</servlet-name>
+		<servlet-class>ee.pri.rl.blog.web.servlet.FileDownloadServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DownloadServlet</servlet-name>
+		<url-pattern>/files/*</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>OpenEntityManagerInViewFilter</filter-name>
+		<filter-class>
+			org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>OpenEntityManagerInViewFilter</filter-name>
+		<url-pattern>/app/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<description>Filter that displays Wicket application</description>
+		<filter-name>Blog</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>ee.pri.rl.blog.web.BlogApplication</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>Blog</filter-name>
+		<url-pattern>/app/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<error-page>
+		<error-code>500</error-code>
+		<location>/app/error</location>
+	</error-page>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/app/error</location>
+	</error-page>
+
+	<error-page>
+		<error-code>403</error-code>
+		<location>/app/error</location>
+	</error-page>
+
+</web-app>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2009 Raivo Laanemets <rl@starline.ee>
+
+    This file is part of rl-blog.
+
+    Foobar is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Foobar is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with rl-blog.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:oscache="http://www.springmodules.org/schema/oscache"
+	xsi:schemaLocation="
+       		http://www.springframework.org/schema/beans
+       		http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       		http://www.springframework.org/schema/tx
+       		http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       		http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       		http://www.springmodules.org/schema/oscache
+       		http://www.springmodules.org/schema/cache/springmodules-oscache.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="ee.pri.rl.blog" />
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:blog.properties</value>
+		</property>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter">
+				<property name="database" value="${db.database}" />
+				<property name="showSql" value="${db.showSql}" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" p:driverClassName="${db.driver}"
+		p:url="${db.url}" p:username="${db.username}" p:password="${db.password}" />
+
+	<bean id="cacheManager"
+		class="org.springmodules.cache.provider.oscache.OsCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:oscache.properties" />
+	</bean>
+
+	<bean id="cacheProvider" class="org.springmodules.cache.provider.oscache.OsCacheFacade">
+		<property name="cacheManager" ref="cacheManager" />
+	</bean>
+
+	<oscache:annotations providerId="cacheProvider">
+		<oscache:caching id="settingCacheModel" groups="settings" />
+		<oscache:caching id="pageCacheModel" groups="pageCache" />
+		<oscache:flushing id="settingFlushModel" when="after"
+			groups="settings,pageCache" />
+		<oscache:flushing id="pageFlushModel" when="after"
+			groups="pageCache" />
+	</oscache:annotations>
+
+</beans>

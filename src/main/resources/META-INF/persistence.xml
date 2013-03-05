@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2009 Raivo Laanemets <rl@starline.ee>
+
+    This file is part of rl-blog.
+
+    Foobar is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Foobar is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with rl-blog.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	
+	<persistence-unit name="blog" transaction-type="RESOURCE_LOCAL">
+		<class>ee.pri.rl.blog.model.Category</class>
+		<class>ee.pri.rl.blog.model.Comment</class>
+		<class>ee.pri.rl.blog.model.Entry</class>
+		<class>ee.pri.rl.blog.model.Setting</class>
+		<properties>
+			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(SchemaAction='add')" />
+			<property name="openjpa.QueryCache" value="CacheSize=1000, SoftReferenceSize=0" />
+		</properties>
+	</persistence-unit>
+	
+</persistence>
